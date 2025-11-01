@@ -3,30 +3,33 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "examplepackagefb1258"
-description = "An example of a package developed with pipenv, built with build using setuptools, uploaded to PyPI using twine, and distributed via pip."
-version = "0.1.2"
+name = "pypet"
+description = "A tiny virtual pet that lives in your terminal."
+version = "0.1.0"
 authors = [
-  { name="Foo Barstein", email="foo.barstein@onepotcooking.com" },
+  { name = "Alexander Xie", email = "alexxie9667@gmail.com" },
 ]
 license = { file = "LICENSE" }
 readme = "README.md"
-keywords = ["python", "package", "build", "tutorial"]
-requires-python = ">=3.7"
+keywords = ["virtual pet", "terminal", "game", "python"]
+requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Intended Audience :: Education",
+    "Intended Audience :: Developers",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent",
 ]
+
+dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest"]
 
 [project.urls]
-"Homepage" = "https://github.com/nyu-software-engineering/python-package-example"
-"Repository" = "https://github.com/nyu-software-engineering/python-package-example.git"
-"Bug Tracker" = "https://github.com/nyu-software-engineering/python-package-example/issues"
+"Homepage" = "https://github.com/swe-students-fall2025/3-python-package-team_pioneer"
+"Repository" = "https://github.com/swe-students-fall2025/3-python-package-team_pioneer.git"
+"Bug Tracker" = "https://github.com/swe-students-fall2025/3-python-package-team_pioneer/issues"
 
-[project.scripts]
-examplepackagefb1258 = "examplepackagefb1258.__main__:main"
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
