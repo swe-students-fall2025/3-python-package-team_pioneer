@@ -15,16 +15,14 @@ def test_status_verbose():
     assert "Happiness" in s
 
 def test_status_ascii_art():
-    # Check that ASCII art for each species appears
     animals = ["cat", "dog", "otter", "capybara", "duck"]
     for species in animals:
         pet = create_pet("Test", species)
         s = status(pet, ascii_art=True)
-        # Just check for one non-empty line of ASCII art
+
         assert "(" in s or "\\" in s or "_" in s
 
 def test_status_color():
     pet = create_pet("Mochi", "otter", mood="happy")
     s = status(pet, color=True)
-    # ANSI escape codes always start with \033[
     assert "\033[" in s
