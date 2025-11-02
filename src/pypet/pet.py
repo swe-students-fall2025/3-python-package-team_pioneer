@@ -1,42 +1,9 @@
 from __future__ import annotations
-from datetime import datetime
+
 from dataclasses import dataclass
 from time import time
 from typing import TypedDict, Dict
 from uuid import uuid4
-
-ANIMAL_ART = {
-    "cat": r"""
- /\_/\ 
-( o.o )
- > ^ <
-""",
-    "dog": r"""
-  / \__
- (    @\___
- /         O
-/   (_____/
-/_____/   U
-""",
-    "otter": r"""
- (\_._/)
- ( o o )
-  > ^ <
-""",
-    "capybara": r"""
-  ( \_______/ )
-  ( o   o )
-   (  -  )
-    """,
-    "duck": r"""
-<(o )___
- ( ._> /
-  `---'
-"""
-}
-
-
-
 
 ALLOWED_SPECIES = {"cat", "dog", "otter", "capybara", "duck"}
 ALLOWED_MOODS = {"happy", "neutral", "grumpy", "sleepy", "hungry", "sad"}
@@ -164,41 +131,6 @@ def play(pet: dict, game: str, energy: int, reward: bool):
     # code
     return {}
 
-def status(pet: dict, color: bool = False, verbose: bool = False, ascii_art: bool = False):
-    if not isinstance(pet, dict):
-        raise ValueError("pet must be a dictionary")
-
-    name = pet.get("name", "Unknown")
-    species = pet.get("species", "unknown")
-    mood = pet.get("mood", "neutral")
-    hunger = pet.get("hunger", 0)
-    energy = pet.get("energy", 0)
-    happiness = pet.get("happiness", 0)
-
-
-    if color:
-        colors = {
-            "happy": "\033[92m", #green
-            "neutral": "\033[93m", #yellow
-            "grumpy": "\033[91m", #red
-            "sleepy": "\033[94m", #blue
-            "hungry": "\033[95m", #magenta
-            "sad": "\033[90m", #gray
-        }
-        end = "\033[0m"
-        mood_text = f"{colors.get(mood, '')}{mood}{end}"
-    else:
-        mood_text = mood
-
-    summary = f"{name} the {species} looks {mood_text}."
-
-    if verbose:
-        summary += f"\nHunger: {hunger}/100 | Energy: {energy}/100 | Happiness: {happiness}/100"
-        if "last_interaction_at" in pet:
-            summary += f"\nLast interaction: {datetime.fromtimestamp(pet['last_interaction_at']).strftime('%Y-%m-%d %H:%M:%S')}"
-
-    if ascii_art:
-        art = ANIMAL_ART.get(species, "(•ᴗ•)")
-        summary += "\n" + art.strip()
-
-    return summary
+def status(pet: dict, color: bool, verbose: bool, ascii_art: bool):
+    # code
+    return {}
