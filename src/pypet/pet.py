@@ -154,8 +154,53 @@ def create_pet(
 
 
 def feed(pet: dict, food: str, portion: int, treat: bool):
-    # code
-    return {}
+    """
+    Feed the pet to reduce hunger and improve happiness slightly.
+    Also updates mood and timestamps.
+    """
+    if not isinstance(pet, dict):
+        raise ValueError("pet must be a dict created by create_pet()")
+    if "hunger" not in pet or "happiness" not in pet:
+        raise ValueError("invalid pet schema")
+
+    if not isinstance(food, str):
+        raise ValueError("food must be a string")
+    if not isinstance(portion, int) or not (0 <= portion <= 100):
+        raise ValueError("portion must be between 0 and 100")
+
+    # Time since last interaction
+    pet = time_passes(pet, seconds=1800)  
+
+    FOOD_EFFECTS = {
+        "kibble": 15,
+        "fish": 25,
+        "carrot": 10,
+        "steak": 30,
+        "cookie": 20,
+    }
+
+    base_effect = FOOD_EFFECTS.get(food.lower(), 10)
+    hunger_delta = base_effect * (portion / 100)
+    if treat:
+        hunger_delta += 5
+
+    lo, hi = BOUNDS["hunger"]
+    pet["hunger"] = clamp(pet["hunger"] - hunger_delta, lo, hi)
+
+    # Increase happiness based on fullness
+    fullness_bonus = (100 - pet["hunger"]) / 15
+    pet["happiness"] = clamp(
+        pet["happiness"] + fullness_bonus + (5 if treat else 0),
+        *BOUNDS["happiness"],
+    )
+
+    # Update last interaction
+    pet["last_interaction_at"] = time()
+
+    # Recalculate mood 
+    pet = update_mood(pet)
+
+    return pet
 
 def play(pet: dict, game: str, energy: int, reward: bool):
     """
@@ -243,12 +288,12 @@ def status(pet: dict, color: bool = False, verbose: bool = False, ascii_art: boo
 
     if color:
         colors = {
-            "happy": "\033[92m",   # green
+            "happy": "\033[92m",  # green
             "neutral": "\033[93m", # yellow
-            "grumpy": "\033[91m",  # red
-            "sleepy": "\033[94m",  # blue
-            "hungry": "\033[95m",  # magenta
-            "sad": "\033[90m",     # gray
+            "grumpy": "\033[91m", # red
+            "sleepy": "\033[94m", # blue
+            "hungry": "\033[95m", # magenta
+            "sad": "\033[90m",  # gray
         }
         end = "\033[0m"
         mood_text = f"{colors.get(mood, '')}{mood}{end}"
@@ -256,10 +301,11 @@ def status(pet: dict, color: bool = False, verbose: bool = False, ascii_art: boo
         mood_text = mood
     
     summary = "\n" + "-" * 40 + "\n"
-    summary += f"{name} the {species} looks {mood_text}."
+    summary += f"{name} the {species} looks {mood_text}.\n"
+    summary += "-" * 40
 
     if verbose:
-        summary += "\n" + "-" * 40 + "\n"
+        summary += "\n" 
         for key, value in pet.items():
             if key in {"name", "species", "mood"}:
                 continue
@@ -269,11 +315,46 @@ def status(pet: dict, color: bool = False, verbose: bool = False, ascii_art: boo
                 summary += f"{label} {value}\n"
             else:
                 summary += f"{key}: {value}\n"
+
         summary = summary.strip()
-        summary += "\n" + "-" * 40
+        summary+= "\n"+"-" * 40
 
     if ascii_art:
-        art = ANIMAL_ART.get(species, "(•ᴗ•)")
-        summary += "\n" + art.strip()+"\n" 
+        art=ANIMAL_ART.get(species, "(•ᴗ•)")
+        summary+= "\n"+art.strip()+"\n\n" 
 
     return summary
+
+def update_mood(pet: Pet) -> Pet:
+    """Recalculate mood based on hunger, energy, and happiness."""
+    hunger, energy, happiness = pet["hunger"], pet["energy"], pet["happiness"]
+
+    if hunger > 80:
+        pet["mood"] = "hungry"
+    elif energy < 20:
+        pet["mood"] = "sleepy"
+    elif happiness > 70:
+        pet["mood"] = "happy"
+    elif happiness < 30:
+        pet["mood"] = "sad"
+    else:
+        pet["mood"] = "neutral"
+
+    pet["ascii_key"] = f"{pet['species']}:{pet['mood']}"
+    return pet
+
+def time_passes(pet: Pet, seconds: int = 3600) -> Pet:
+    """Simulate time passing: hunger increases and happiness decreases."""
+    decay_factor = seconds / 3600 
+    pet["hunger"] = clamp(pet["hunger"] + 5 * decay_factor, *BOUNDS["hunger"])
+    pet["happiness"] = clamp(pet["happiness"] - 3 * decay_factor, *BOUNDS["happiness"])
+    pet["last_interaction_at"] = time()
+    return update_mood(pet)
+
+def describe_pet(pet: Pet) -> str:
+    """Return a readable summary of the pet's state."""
+    return (
+        f"{pet['name']} the {pet['species']} looks {pet['mood']}! "
+        f"Hunger: {pet['hunger']:.1f}/100, Energy: {pet['energy']}/100, "
+        f"Happiness: {pet['happiness']:.1f}/100."
+    )
