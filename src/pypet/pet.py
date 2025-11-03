@@ -305,19 +305,21 @@ def status(pet: dict, color: bool = False, verbose: bool = False, ascii_art: boo
     summary += "-" * 40
 
     if verbose:
-        summary += "\n" 
+        summary += "\n"
         for key, value in pet.items():
             if key in {"name", "species", "mood"}:
                 continue
+        # Format timestamps
             if key in {"created_at", "last_interaction_at"}:
                 value = datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")
                 label = "Created at:" if key == "created_at" else "Last interaction:"
-                summary += f"{label} {value}\n"
             else:
-                summary += f"{key}: {value}\n"
-
+            # Capitalize first letter for keys
+                label = key.capitalize() + ":"
+            summary += f"{label} {value}\n"
         summary = summary.strip()
-        summary+= "\n"+"-" * 40
+        summary += "\n" + "-" * 40
+
 
     if ascii_art:
         art=ANIMAL_ART.get(species, "(•ᴗ•)")

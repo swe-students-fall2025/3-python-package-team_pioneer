@@ -4,11 +4,11 @@ import time
 
 pet = create_pet("Mochi", "otter")
 play(pet, "fetch", 10, True)
-print(status(pet, color=True, verbose=False, ascii_art=True))
+print(status(pet, color=True, verbose=True, ascii_art=True))
 
-pet = create_pet("Mochi", "otter")
+pet = create_pet("Mochi", "cat")
 play(pet, "fetch", 10, True)
-print(status(pet, color=True, verbose=False, ascii_art=True)) 
+print(status(pet, color=True, verbose=True, ascii_art=True)) 
 
 
 
