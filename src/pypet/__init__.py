@@ -10,7 +10,7 @@ APIs:
 
 from .pet import (
     create_pet,
-    status,
+    play,
     ALLOWED_SPECIES,
     ALLOWED_MOODS,
     BOUNDS,
@@ -19,7 +19,7 @@ from .pet import (
 
 __all__ = [
     "create_pet",
-    "status",
+    "play",
     "ALLOWED_SPECIES",
     "ALLOWED_MOODS",
     "BOUNDS",
