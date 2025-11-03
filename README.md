@@ -27,3 +27,17 @@ Group Members
 - `status(pet: dict, color: bool, verbose: bool, ascii_art: bool)`
   - Prints the current pet’s stats and ASCII representation.
 
+### Instructions for Running & Testing
+
+``` bash
+pipenv install --dev
+pipenv run pip install -e .
+pipenv run pytest -q
+```
+
+Build
+
+``` bash
+pipenv run python -m build
+pipenv run twine upload --repository testpypi dist/*
+```
