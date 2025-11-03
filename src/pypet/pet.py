@@ -1,9 +1,39 @@
 from __future__ import annotations
-
+from datetime import datetime
 from dataclasses import dataclass
 from time import time
 from typing import TypedDict, Dict
 from uuid import uuid4
+
+ANIMAL_ART = {
+    "cat": r"""
+ /\_/\ 
+( o.o )
+ > ^ <
+""",
+    "dog": r"""
+  / \__
+ (    @\___
+ /         O
+/   (_____/
+/_____/   U
+""",
+    "otter": r"""
+ (\_._/)
+ ( o o )
+  > ^ <
+""",
+    "capybara": r"""
+  ( \_______/ )
+  ( o   o )
+   (  -  )
+    """,
+    "duck": r"""
+<(o )___
+ ( ._> /
+  `---'
+"""
+}
 
 ALLOWED_SPECIES = {"cat", "dog", "otter", "capybara", "duck"}
 ALLOWED_MOODS = {"happy", "neutral", "grumpy", "sleepy", "hungry", "sad"}
@@ -246,9 +276,56 @@ def play(pet: dict, game: str, energy: int, reward: bool):
     
     return updated_pet
 
-def status(pet: dict, color: bool, verbose: bool, ascii_art: bool):
-    # code
-    return {}
+def status(pet: dict, color: bool = False, verbose: bool = False, ascii_art: bool = False):
+    if not isinstance(pet, dict):
+        raise ValueError("pet must be a dictionary")
+
+    pet["last_interaction_at"] = time()
+
+    name = pet.get("name", "Unknown")
+    species = pet.get("species", "unknown")
+    mood = pet.get("mood", "neutral")
+
+    if color:
+        colors = {
+            "happy": "\033[92m",  # green
+            "neutral": "\033[93m", # yellow
+            "grumpy": "\033[91m", # red
+            "sleepy": "\033[94m", # blue
+            "hungry": "\033[95m", # magenta
+            "sad": "\033[90m",  # gray
+        }
+        end = "\033[0m"
+        mood_text = f"{colors.get(mood, '')}{mood}{end}"
+    else:
+        mood_text = mood
+    
+    summary = "\n" + "-" * 40 + "\n"
+    summary += f"{name} the {species} looks {mood_text}.\n"
+    summary += "-" * 40
+
+    if verbose:
+        summary += "\n"
+        for key, value in pet.items():
+            if key in {"name", "species", "mood"}:
+                continue
+        # Format timestamps
+            if key in {"created_at", "last_interaction_at"}:
+                value = datetime.fromtimestamp(value).strftime("%Y-%m-%d %H:%M:%S")
+                label = "Created at:" if key == "created_at" else "Last interaction:"
+            else:
+            # Capitalize first letter for keys
+                label = key.capitalize() + ":"
+            summary += f"{label} {value}\n"
+        summary = summary.strip()
+        summary += "\n" + "-" * 40
+
+
+    if ascii_art:
+        art=ANIMAL_ART.get(species, "(•ᴗ•)")
+        summary+= "\n"+art.strip()+"\n\n" 
+
+    return summary
 
 def update_mood(pet: Pet) -> Pet:
     """Recalculate mood based on hunger, energy, and happiness."""
