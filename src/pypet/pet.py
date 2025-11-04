@@ -269,6 +269,7 @@ def play(pet: dict, game: str, energy: int, reward: bool):
     pet["happiness"] = new_happiness
     pet["mood"] = new_mood
     pet['ascii_key'] = f"{species}:{new_mood}"
+    pet["last_interaction_at"] = time()
     
     return pet
 
