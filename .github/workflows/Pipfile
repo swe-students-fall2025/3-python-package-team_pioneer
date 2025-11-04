@@ -10,6 +10,9 @@ pytz = "*"
 python-dateutil = "*"
 
 [dev-packages]
+pytest = "*"
+build = "*"
+twine = "*"
 
 [requires]
 python_version = "3"

@@ -1,5 +1,7 @@
 # Python Package Exercise
 
+[![log github events](https://github.com/swe-students-fall2025/3-python-package-team_pioneer/actions/workflows/event-logger.yml/badge.svg?branch=main)](https://github.com/swe-students-fall2025/3-python-package-team_pioneer/actions/workflows/event-logger.yml)
+
 An exercise to create a Python package, build it, test it, distribute it, and use it. See [instructions](./instructions.md) for details.
 
 Group Members
@@ -27,3 +29,22 @@ Group Members
 - `status(pet: dict, color: bool, verbose: bool, ascii_art: bool)`
   - Prints the current pet’s stats and ASCII representation.
 
+### Instructions for Running & Testing
+
+``` bash
+pipenv install --dev
+pipenv run pip install -e .
+pipenv run pytest -q
+```
+
+Build
+
+``` bash
+pipenv run python -m build
+```
+
+Upload to TestPyPi
+
+``` bash
+pipenv run twine upload --repository testpypi dist/*
+```
