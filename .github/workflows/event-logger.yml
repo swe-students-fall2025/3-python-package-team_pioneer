@@ -24,7 +24,7 @@ jobs:
       COMMIT_LOG_API: ${{ secrets.COMMIT_LOG_API }}
       GITHUB_LOGIN: ${{ github.actor }}
       COMMITS: ${{ toJSON(github.event.commits) }}
-      REPOSITORY_URL: ${{ github.repositoryUrl }}
+      REPOSITORY_URL: ${{ github.server_url }}/${{ github.repository }}
       EVENT_TYPE: ${{ github.event_name }}
       EVENT_ACTION: ${{ github.event.action }}
       PR_MERGED: ${{ github.event.pull_request.merged }}
