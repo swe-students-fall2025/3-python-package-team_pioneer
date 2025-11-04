@@ -1,6 +1,7 @@
 # Python Package Exercise
 
-[![log github events](https://github.com/swe-students-fall2025/3-python-package-team_pioneer/actions/workflows/event-logger.yml/badge.svg?branch=pipfile-experiment)](https://github.com/swe-students-fall2025/3-python-package-team_pioneer/actions/workflows/event-logger.yml)
+[![CI / CD](https://github.com/swe-students-fall2025/3-python-package-team_pioneer/actions/workflows/ci.yml/badge.svg)](https://github.com/swe-students-fall2025/3-python-package-team_pioneer/actions/workflows/ci.yml) 
+
 
 An exercise to create a Python package, build it, test it, distribute it, and use it. See [instructions](./instructions.md) for details.
 
