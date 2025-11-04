@@ -1,6 +1,5 @@
 from __future__ import annotations
 from datetime import datetime
-from dataclasses import dataclass
 from time import time
 from typing import TypedDict, Dict
 from uuid import uuid4
@@ -265,16 +264,14 @@ def play(pet: dict, game: str, energy: int, reward: bool):
         new_mood = "grumpy"
     else:
         new_mood = "neutral"
+
+    pet["energy"] = new_energy
+    pet["happiness"] = new_happiness
+    pet["mood"] = new_mood
+    pet['ascii_key'] = f"{species}:{new_mood}"
+    pet["last_interaction_at"] = time()
     
-    # Create updated pet
-    updated_pet = pet.copy()
-    updated_pet["energy"] = new_energy
-    updated_pet["happiness"] = new_happiness
-    updated_pet["mood"] = new_mood
-    updated_pet["last_interaction_at"] = time()
-    updated_pet["ascii_key"] = f"{species}:{new_mood}"
-    
-    return updated_pet
+    return pet
 
 def status(pet: dict, color: bool = False, verbose: bool = False, ascii_art: bool = False):
     if not isinstance(pet, dict):
