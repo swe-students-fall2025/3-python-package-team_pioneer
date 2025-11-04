@@ -1,21 +1,18 @@
 #!/usr/bin/env python3
 """
-Interactive pyPet demo (terminal)
+Interactive pyPet demo
 
 Run:
-  pipenv run python examples/demo.py
+  pipenv run python src/demo.py
 """
 
 from __future__ import annotations
 
-import sys 
 import time
 from typing import Optional
 
-# Public API from your package
 from pypet import create_pet, play, status, feed, ALLOWED_SPECIES, ALLOWED_MOODS
 
-# ---------- UI helpers ----------
 
 def clear() -> None:
     print("\033[2J\033[H", end="")
@@ -52,18 +49,14 @@ def spinner(text: str, seconds: float = 1.2) -> None:
         i += 1
     print(" " * 20, end="\r")
 
-# ---------- Game loop ----------
-
 def main() -> int:
     clear()
-    print("🐾  Welcome to pyPet (interactive demo)\n")
+    print("🐾 Welcome to pyPet\n")
 
     name = input("Name your pet: ").strip() or "Mochi"
     species = choose("Pick a species:", sorted(ALLOWED_SPECIES), default="otter")
     mood = choose("Pick a starting mood:", sorted(ALLOWED_MOODS), default="neutral")
 
-
-    # Start a medium-hungry, energetic pet
     pet = create_pet(name=name, species=species, mood=mood, hunger=40, energy=80)
 
     while True:
@@ -115,7 +108,6 @@ def main() -> int:
                 energy = 10
             reward = input("Give a reward after? [y/N]: ").strip().lower().startswith("y")
             spinner("Playing...")
-            # Uses your package function
             play(pet, game, energy, reward)
             print("Done!")
             pause()
@@ -129,8 +121,7 @@ def main() -> int:
                 portion = 8
             treat = input("Is it a special treat? [y/N]: ").strip().lower().startswith("y")
             spinner("Feeding...")
-            # Uses your package function, if available
-            feed(pet, food, portion, treat)  # type: ignore
+            feed(pet, food, portion, treat)
             print("Yum!")
             pause()
             continue
