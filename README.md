@@ -1,5 +1,7 @@
 # Python Package Exercise
 
+[![log github events](https://github.com/swe-students-fall2025/3-python-package-team_pioneer/actions/workflows/event-logger.yml/badge.svg?branch=main)](https://github.com/swe-students-fall2025/3-python-package-team_pioneer/actions/workflows/event-logger.yml)
+
 An exercise to create a Python package, build it, test it, distribute it, and use it. See [instructions](./instructions.md) for details.
 
 Group Members
@@ -39,5 +41,10 @@ Build
 
 ``` bash
 pipenv run python -m build
+```
+
+Upload to TestPyPi
+
+``` bash
 pipenv run twine upload --repository testpypi dist/*
 ```

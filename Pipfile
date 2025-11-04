@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 
 [dev-packages]
+pytest-cov = "*"
+codecov = "*"
+coveralls = "*"
 
 [requires]
 python_version = "3.13"
