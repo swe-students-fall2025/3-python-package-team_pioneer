@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pypet"
 description = "A tiny virtual pet that lives in your terminal."
-version = "0.1.0"
+version = "0.1.2"
 authors = [
   { name = "Alexander Xie", email = "alexxie9667@gmail.com" },
 ]
@@ -33,3 +33,14 @@ dev = ["pytest"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests*", "examples*"] 
+
+[project.scripts]
+pypet-demo = "pypet.examples.demo:main"
+
