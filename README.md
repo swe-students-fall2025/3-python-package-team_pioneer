@@ -16,6 +16,7 @@ pyPet is a delightful Python package that lets you create and care for a virtual
 - [Lanxi](https://github.com/player1notfound)
 - [Alex](https://github.com/axie22)
 - [Matthew](https://github.com/mzhou3299)
+- [Andrew Liu](https://github.com/aklLiu5062)
 
 ---
 
