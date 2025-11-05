@@ -49,3 +49,31 @@ Upload to TestPyPi
 ``` bash
 pipenv run twine upload --repository testpypi dist/*
 ```
+
+### How to install and run from TestPyPi
+
+Create virtual env. and install
+
+``` bash
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install -i https://test.pypi.org/simple/ pypet==0.1.2
+```
+
+Interact with our demo script
+
+``` bash
+pypet-demo
+```
+
+Or build your own pet
+
+``` python
+from pypet import create_pet, play, feed, status
+
+pet = create_pet("Mochi", "otter", mood="happy", hunger=25, energy=85)
+play(pet, "fetch", 10, True)
+feed(pet, "kibble", 20, False)
+print(status(pet, color=True, verbose=True, ascii_art=True))
+```
