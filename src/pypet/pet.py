@@ -336,8 +336,6 @@ def update_mood(pet: Pet) -> Pet:
         pet["mood"] = "happy"
     elif happiness < 30:
         pet["mood"] = "sad"
-    elif happiness < 50:
-        pet["mood"] = "grumpy"
     else:
         pet["mood"] = "neutral"
 
